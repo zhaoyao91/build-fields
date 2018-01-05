@@ -4,6 +4,7 @@ const buildFields = require('./index')
 
 describe('buildFields', function () {
   const src = {name: 'Bob', age: 20}
+
   describe('2 args', function () {
     test('basic usage', () => {
       const result = buildFields({
@@ -29,6 +30,16 @@ describe('buildFields', function () {
         }
       }, src)
       expect(result).toEqual({bigName: 'BOB', friend: {name: 'Alice', age: 20}})
+    })
+
+    test('array builder', () => {
+      const result = buildFields({
+        friends: [
+          {name: prop('name')},
+          {age: prop('age')}
+        ]
+      }, src)
+      expect(result).toEqual({friends: [{name: 'Bob'}, {age: 20}]})
     })
   })
 
